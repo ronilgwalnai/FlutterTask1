@@ -4,13 +4,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task/Ui/ProductScreen/Cubit/CubitStates.dart';
-import 'package:task/Ui/ProductScreen/Models/productModels.dart';
 
-import '../../Helpers/Constants.dart';
-import '../../Network/Apis.dart';
-import '../../Network/CallApi.dart';
+import '../../../Helpers/Constants.dart';
+import '../../../Network/Apis.dart';
+import '../../../Network/CallApi.dart';
+import 'Cubit/CubitStates.dart';
 import 'Cubit/productCubit.dart';
+import 'Models/productModels.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({Key? key}) : super(key: key);
@@ -87,7 +87,7 @@ class _ProductPageState extends State<ProductPage> {
                         style: const TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                       )
-                    : const SizedBox.shrink();
+                    :  const SizedBox.shrink();
               }),
             ),
             Padding(
@@ -126,7 +126,9 @@ class _ProductPageState extends State<ProductPage> {
                     );
                   }
 
-                  return const Center(child: CircularProgressIndicator(),);
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }),
             StreamBuilder<num>(
                 stream: bottomAmount.stream,
@@ -134,7 +136,7 @@ class _ProductPageState extends State<ProductPage> {
                   return AnimatedContainer(
                     color: Colors.deepOrange,
                     duration: const Duration(seconds: 1),
-                    height: snapshot.hasData&&snapshot.data! > 0 ? 60 : 0,
+                    height: snapshot.hasData && snapshot.data! > 0 ? 60 : 0,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -154,8 +156,9 @@ class _ProductPageState extends State<ProductPage> {
                               vertical: 8.0, horizontal: 15),
                           child: ElevatedButton(
                               onPressed: () {
-                                context.read<productCubit>().nextScreenClick(context,model.data);
-
+                                context
+                                    .read<productCubit>()
+                                    .nextScreenClick(context, model.data);
                               },
                               child: const Text(
                                 Strings.placeMyOrder,
@@ -358,7 +361,7 @@ class _ProductPageState extends State<ProductPage> {
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemCount: model.addOns?.length ?? 0,
                                   itemBuilder: (context, position) {
-                                    return  _addonsLayout(
+                                    return _addonsLayout(
                                         model.addOns![position]);
                                   }),
                             ],
@@ -550,7 +553,7 @@ class _ProductPageState extends State<ProductPage> {
     parms[Parms.subscription_product_id] = '9';
     productDataCall.postRequest(parms, (response) {
       var jsonData = json.decode(response);
-       model = ProductModel.fromJson(jsonData);
+      model = ProductModel.fromJson(jsonData);
       context.read<productCubit>().setHeading(model.heading, model.subheading);
       dataController.add(model);
     }, (error) {

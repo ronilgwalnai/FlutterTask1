@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task/Ui/ProductScreen/Cubit/productCubit.dart';
+import 'package:task/Ui/Task2/MainScreen/Cubit/MainPageCubit.dart';
 
-import 'Ui/ProductScreen/ProductPage.dart';
+import 'Ui/Task2/MainScreen/MainPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,12 +18,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromRGBO(0, 119, 150, 1.0)),
         useMaterial3: true,
       ),
+      // home: const MainPage(
       home: BlocProvider(
-        create: (context) => productCubit(),
-        child: const ProductPage(),
+        create: (context) => MainPageCubit(),
+        child:  MainPage(),
+        //   create: (context) => productCubit(),
+        //   child:  const ProductPage(),
       ),
     );
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task/Ui/ProductScreen/Cubit/CubitStates.dart';
 
 import '../../ResultScreen/ResultScreen.dart';
 import '../Models/productModels.dart';
+import 'CubitStates.dart';
 
 class productCubit extends Cubit<CubitState> {
   productCubit() : super(InitialState());
