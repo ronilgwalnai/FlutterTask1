@@ -1,14 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task/Helpers/Constants.dart';
 import 'package:task/Helpers/HelperFunctions.dart';
-import 'package:task/Ui/Task2/LoginScreen/loginPage.dart';
-
-import '../LoginScreen/Cubit/LoginCubit.dart';
-import '../MainScreen/MainPage.dart';
+import 'package:task/Routes/RoutesPath.dart';
 
 class SplashPage extends StatelessWidget {
   late SharedPreferences _preference;
@@ -25,18 +21,10 @@ class SplashPage extends StatelessWidget {
     _preference = await SharedPreferences.getInstance();
     Timer(const Duration(seconds: 2), () {
       if (_preference.getBool(SavedValues.login) == true) {
-        startNewPage(context, DemoPage(), finishCurrent: true);
+        startNewPage(context, RoutesPath.mainPage, finishAll: true);
+        // startNewPage(context, DemoPage(), finishCurrent: true);
       } else {
-        startNewPage(
-            context,
-            Hero(
-              tag: "kartik",
-              child: BlocProvider(
-                create: (context) => LoginCubit(),
-                child: loginPage(),
-              ),
-            ),
-            finishAll: true);
+        startNewPage(context, RoutesPath.login, finishAll: true);
       }
     });
   }

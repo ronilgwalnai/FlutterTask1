@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 mixin ImagesPath {
   static const String logo = 'asset/images/logo.png';
+  static const String demo = 'asset/images/demo.png';
   static const String logo2 = 'asset/images/logo2.png';
   static const String background = 'asset/images/bg.svg';
   static const String help = 'asset/images/help.png';
@@ -15,11 +16,13 @@ mixin Strings {
   static const String enterOtpCompletely = 'Please Enter the Valid Otp';
   static const String signIn = 'Sign In';
   static const String pleaseWait = 'Please Wait';
+  static const String logoutTxt = 'Are you sure you wanna Logout from app';
   static const String loading = 'Loading';
   static const String confirm = 'Confirm';
   static const String register = 'Register';
   static const String resendCode = 'Resend Code';
   static const String login = 'LOGIN';
+  static const String logout = 'Logout';
   static const String otpEnterText = 'Please Enter the 4-digit code just send to your +91 ';
   static const String demoNumber = 'Ex: 9786435856';
   static const String numberLengthError = 'Phone Number Length Must me 10';
@@ -30,6 +33,9 @@ mixin Strings {
       'Simply Enter your phone number to login or create an account';
   static const String placeMyOrder = 'Place My Order';
   static const String confirmation = 'Confirmation';
+  static const String categories = 'Categories';
+  static const String cancel = 'Cancel';
+  static const String yes = 'Yes';
 }
 mixin Parms {
   static const String pincode = 'pincode';

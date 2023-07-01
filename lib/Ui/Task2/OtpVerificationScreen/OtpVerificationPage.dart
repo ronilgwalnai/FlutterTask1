@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task/Routes/RoutesPath.dart';
 import 'package:task/Ui/Task2/OtpVerificationScreen/OtpCubit/OtpStates.dart';
 
 import '../../../Helpers/Constants.dart';
@@ -29,7 +30,7 @@ class OtpVerificationPage extends StatelessWidget {
               showDialogue(context);
             } else if (state is VerificationSuccessfulState) {
               cancelDialogue(context);
-              startNewPage(context,  DemoPage(), finishAll: true);
+              startNewPage(context,RoutesPath.mainPage, finishAll: true);
             } else if (state is VerificationFailedState) {
               cancelDialogue(context);
               showSnackBar(context, state.message ?? "Some thing Went Wrong");

@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task/Helpers/Constants.dart';
 
-void startNewPage(BuildContext context, Widget page,
-    {bool finishCurrent = true, bool finishAll = false}) {
+void startNewPage(BuildContext context, String page,
+    {bool finishCurrent = true, bool finishAll = false, Object? arguments}) {
   if (finishAll) {
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (BuildContext context) {
-      return page;
-    }), (route) => false);
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(page, arguments: arguments, (route) => false);
   } else {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (BuildContext context) {
-        return WillPopScope(
-            onWillPop: () async {
-              return !finishCurrent;
-            },
-            child: page);
-      }),
-    );
+    if (finishCurrent) {
+      Navigator.of(context).pushReplacementNamed(page, arguments: arguments);
+    } else {
+      Navigator.of(context).pushNamed(page, arguments: arguments);
+    }
   }
+}
+
+void onBackPress(BuildContext context){
+  Navigator.pop(context);
 }
 
 AlertDialog? dialogue;
@@ -88,7 +85,7 @@ void showSnackBar(BuildContext context, String message) {
 }
 
 class DemoPage extends StatelessWidget {
-   DemoPage({super.key});
+  DemoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -100,13 +97,43 @@ class DemoPage extends StatelessWidget {
         tag: Strings.login,
         child: Center(
           child: Container(
-            width: 400,height: 400,
-
+            width: 400,
+            height: 400,
             color: Colors.green,
           ),
         ),
       ),
     );
   }
-
 }
+
+Widget gridItem(String title, String imagePath) {
+  return Container(
+    decoration: const BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+              spreadRadius: 0.001,
+              color: Colors.grey,
+              blurRadius: 0.001,
+              offset: Offset(0.1, 0.1))
+        ],
+        borderRadius: BorderRadius.all(Radius.circular(10))),
+    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        imagePath == ''
+            ? const Image(image: AssetImage(ImagesPath.demo))
+            : Image(image: NetworkImage(imagePath)),
+        Padding(
+          padding: const EdgeInsets.only(top: 3.0),
+          child: Text(title,maxLines: 2,),
+        )
+      ],
+    ),
+  );
+}
+
+

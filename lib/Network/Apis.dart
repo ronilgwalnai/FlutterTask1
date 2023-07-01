@@ -1,11 +1,11 @@
-
 import 'dart:async';
 import 'dart:collection';
+
 import 'package:http/http.dart' as http;
-StreamSubscription<http.Response>? _requestSubscription;
 
 class MyApiCalls {
   String url;
+  StreamSubscription<http.Response>? _requestSubscription;
 
   void _cancelRequest() {
     _requestSubscription?.cancel();
@@ -21,6 +21,7 @@ class MyApiCalls {
   Future<void> getRequest<T>(HashMap<String, String> hashMap,
       Function(String) onApiSuccess, Function(Error) onApiFailed) async {
     if (_cancel) {
+
       _cancelRequest();
     }
     var tempUri = Uri.parse(url);
@@ -29,8 +30,8 @@ class MyApiCalls {
     );
     _requestSubscription = request.asStream().listen((response) {
       if (response.statusCode == 200) {
+        print("GET --- ${response.body}");
         onApiSuccess(response.body);
-
       } else {
         // Error handling
         onApiFailed(
@@ -43,14 +44,15 @@ class MyApiCalls {
     });
   }
 
-  Future<void> postRequest(HashMap hashMap,
-      Function(String) onApiSuccess, Function(Error) onApiFailed) async {
+  Future<void> postRequest(HashMap hashMap, Function(String) onApiSuccess,
+      Function(Error) onApiFailed) async {
     if (_cancel) {
       _cancelRequest();
     }
     var request = http.post(Uri.parse(url), body: hashMap);
     _requestSubscription = request.asStream().listen((response) {
       if (response.statusCode == 200) {
+        print(response.body);
         onApiSuccess(response.body);
       } else {
         onApiFailed(

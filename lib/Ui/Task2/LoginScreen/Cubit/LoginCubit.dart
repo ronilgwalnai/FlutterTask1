@@ -5,12 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task/Helpers/Constants.dart';
 import 'package:task/Network/CallApi.dart';
+import 'package:task/Routes/RoutesPath.dart';
 import 'package:task/Ui/Task2/LoginScreen/Modals/LoginModel.dart';
 
 import '../../../../Helpers/HelperFunctions.dart';
 import '../../../../Network/Apis.dart';
-import '../../OtpVerificationScreen/OtpCubit/OtpCubit.dart';
-import '../../OtpVerificationScreen/OtpVerificationPage.dart';
 import 'LoginCubitStates.dart';
 
 class LoginCubit extends Cubit<LoginCubitStates> {
@@ -36,12 +35,8 @@ class LoginCubit extends Cubit<LoginCubitStates> {
       var model = LoginModel.fromJson(jsonData);
       if (model.status == ResponseTypes.valid) {
         emit(LoginSuccessful());
-        startNewPage(
-            context,
-            BlocProvider(
-                create: (context) => OtpCubit(),
-                child: OtpVerificationPage(number: phoneNumber)),
-            finishCurrent: false);
+        startNewPage(context, RoutesPath.otpVerification,
+            finishCurrent: false, arguments: map[Parms.mobile]);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(model.message.toString()),
